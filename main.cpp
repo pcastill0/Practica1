@@ -44,10 +44,29 @@ void Intro(Player & player) {
 	currentScene = NAVIGATION;
 }
 
+void Status(Player player) {
+	system("cls");
+	std::cout << "------------ PLAYER ------------\n";
+	std::cout << player.name << "\n";
+	std::cout << "-------------------------------\n";
+	std::cout << "HP: " << player.hp << "/" << player.maxHp << "\n";
+	std::cout << "-----------INVENTORY-----------\n";
+	std::cout << "Potion: " << player.potions << "\n";
+	std::cout << "Bomb: " << player.bombs << "\n";
+	std::cout << "Sword: " << player.swords << "\n";
+	std::cout << "Key: " << player.keys << "\n";
+	std::cout << "--------------------------------\n";
+	currentScene = NAVIGATION;
+}
+
+void Help() {
+
+}
+
 void Navigation(Player player) {
 	system("cls");
 	bool north = false, south = false, east = false, west = false;
-	int x, y;
+
 	std::cout << "[" << player.name << "] at [" 
 		<< player.position[0] <<", " << player.position[1]<<"]\n";
 
@@ -61,7 +80,6 @@ void Navigation(Player player) {
 	if (map[player.position[0]][player.position[1] + 1] != '#') {
 		south = true;
 		std::cout << "[South]";
-
 	}
 
 	if (map[player.position[0]+1] [player.position[1]] != '#') {
@@ -76,10 +94,32 @@ void Navigation(Player player) {
 
 	}
 
-	std::cout << "\nWhat will you do?";
+	std::cout << "\nChoose your action\n>";
+	//std::string command;
+	//std::getline(std::cin, command);
+	std::string comm1, comm2;
+	std::cin >> comm1;
 
-	std::cin >> x;
-	std::cin >> y;
+	if (comm1 == "go") {
+		if (comm2 == "north" && north) {
+			player.position[1]--;
+		} else if (comm2 == "south" && south) {
+			player.position[1]++;
+		} else if (comm2 == "east" && east) {
+			player.position[0]++;
+		} else if (comm2 == "west" && west) {
+			player.position[0]--;
+		}
+
+	} else if (comm1 == "pick") {
+
+	} else if (comm1 == "use") {
+
+	} else if (comm1 == "status") {
+		Status(player);
+	} else if (comm1 == "help"){
+		Help();
+	}
 
 }
 
@@ -92,21 +132,6 @@ void PickupItem() {
 
 }
 
-void Status(Player player) {
-	system("cls");
-	std::cout << "------------ PLAYER ------------\n";
-	std::cout << player.name <<"\n";
-	std::cout << "-------------------------------\n";
-	std::cout << "HP: " << player.hp << "/" << player.maxHp << "\n";
-	std::cout << "-----------INVENTORY-----------\n";
-	std::cout << "Potion: " << player.potions << "\n";
-	std::cout << "Bomb: " << player.bombs << "\n";
-	std::cout << "Sword: " << player.swords << "\n";
-	std::cout << "Key: " << player.keys << "\n";
-	std::cout << "--------------------------------\n";
-	currentScene = NAVIGATION;
-}
-
 int main() {
 
 	for (int i = 0; i < 10; i++) {
@@ -117,8 +142,8 @@ int main() {
 		std::cout << "\n";
 	}
 
+	Player player;
 	while (true){
-		Player player;
 
 		if (currentScene == INTRO) {
 			Intro(player);
