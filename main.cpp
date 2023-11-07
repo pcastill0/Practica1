@@ -63,8 +63,10 @@ void Help() {
 
 }
 
-void Navigation(Player player) {
+void Navigation(Player & player) {
 	system("cls");
+
+	//Comprobar espacios libres
 	bool north = false, south = false, east = false, west = false;
 
 	std::cout << "[" << player.name << "] at [" 
@@ -72,28 +74,59 @@ void Navigation(Player player) {
 
 	std::cout << "You can go: ";
 
-	if (map[player.position[0]][player.position[1] - 1] != '#') {
+	if (map[player.position[0]-1][player.position[1]] != '#') {
 		north = true;
 		std::cout << "[North]";
 	}
 
-	if (map[player.position[0]][player.position[1] + 1] != '#') {
+	if (map[player.position[0]+1][player.position[1]] != '#') {
 		south = true;
 		std::cout << "[South]";
 	}
 
-	if (map[player.position[0]+1] [player.position[1]] != '#') {
+	if (map[player.position[0]] [player.position[1]+1] != '#') {
 		east = true;
 		std::cout << "[East]";
 
 	}
 
-	if (map[player.position[0] -1][player.position[1]] != '#') {
+	if (map[player.position[0]][player.position[1]-1] != '#') {
 		west = true;
 		std::cout << "[West]";
 
 	}
 
+	//Buscar dragon
+	int dragonPosition[2];
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++)
+		{
+			if (map[i][j] == 'J') {
+				dragonPosition[0] = i;
+				dragonPosition[1] = j;
+				std::cout << "\nDragon is at: " << i << "," << j << "\n>";
+			}
+		}
+	}
+
+	std::cout << "\nThe boss is at: ";
+	if (dragonPosition[1] < player.position[1]) {
+		std::cout << "[Noerth]";
+	}
+
+	if (dragonPosition[1] > player.position[1]) {
+		std::cout << "[South]";
+	}
+
+	if (dragonPosition[0] < player.position[0]) {
+		std::cout << "[West]";
+	}
+
+	if (dragonPosition[0] > player.position[0]) {
+		std::cout << "[East]";
+	}
+
+	//Escoger accion
 	std::cout << "\nChoose your action\n>";
 	//std::string command;
 	//std::getline(std::cin, command);
@@ -101,6 +134,8 @@ void Navigation(Player player) {
 	std::cin >> comm1;
 
 	if (comm1 == "go") {
+		std::cout << "Which direction?\n>";
+		std::cin >> comm2;
 		if (comm2 == "north" && north) {
 			player.position[1]--;
 		} else if (comm2 == "south" && south) {
@@ -110,6 +145,8 @@ void Navigation(Player player) {
 		} else if (comm2 == "west" && west) {
 			player.position[0]--;
 		}
+
+		//TO-D0 Comprobar enemigo
 
 	} else if (comm1 == "pick") {
 
