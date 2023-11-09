@@ -104,14 +104,17 @@ void Navigation(Player & player) {
 			if (map[i][j] == 'J') {
 				dragonPosition[0] = i;
 				dragonPosition[1] = j;
-				std::cout << "\nDragon is at: " << i << "," << j << "\n>";
+				std::cout << "\nDragon is at: " << j << "," << i << "\n>";
 			}
 		}
 	}
 
+	//TO-DO Buscar enemigos y posiones cercanas
+
 	std::cout << "\nThe boss is at: ";
+
 	if (dragonPosition[1] < player.position[1]) {
-		std::cout << "[Noerth]";
+		std::cout << "[North]";
 	}
 
 	if (dragonPosition[1] > player.position[1]) {
@@ -146,7 +149,7 @@ void Navigation(Player & player) {
 			player.position[0]--;
 		}
 
-		//TO-D0 Comprobar enemigo
+		//TO-DO Comprobar enemigo en mi posicion
 
 	} else if (comm1 == "pick") {
 
