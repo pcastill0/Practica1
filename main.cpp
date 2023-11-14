@@ -250,21 +250,25 @@ bool findNearby(Player player, char obj, std::string objString) {
 
 void PickupItem(Player& player, std::string obj) {
 	std::cout << player.name << " have picked a ";
-	if (obj == "potion\n") {
+	if (obj == "potion") {
 		player.potions++;
-		std::cout << obj;
+		std::cout << obj << "\n";
+		map[player.position[0]][player.position[1]] = '.';
 	}
-	else if (obj == "sword\n") {
+	else if (obj == "sword") {
 		player.swords = true;
-		std::cout << obj;
+		std::cout << obj << "\n";
+		map[player.position[0]][player.position[1]] = '.';
 	}
-	else if (obj == "bomb\n") {
+	else if (obj == "bomb") {
 		player.bombs++;
-		std::cout << obj;
+		std::cout << obj << "\n";
+		map[player.position[0]][player.position[1]] = '.';
 	}
-	else if (obj == "bomb\n") {
-		player.bombs++;
-		std::cout << obj;
+	else if (obj == "key") {
+		player.keys = true;
+		std::cout << obj << "\n";
+		map[player.position[0]][player.position[1]] = '.';
 	}
 }
 
