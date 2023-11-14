@@ -32,12 +32,52 @@ struct Player {
 
 struct Enemy {
 	std::string name;
-	int hp = 100;
-	int maxHp = 100;
-	int potions = 0;
-	int bombs = 0;
-	bool swords = 0;
+	int hp;
+	int maxHP;
+	int attack;
+	int firstAttack;
+	int defense;
+	std::string attackName;
 };
+
+
+Enemy GenerateEnemy(Player player) {
+	Enemy enemy;
+	if (map[player.position[0]][player.position[1]] == 'G') {
+		enemy.name = "Goblin";
+		enemy.hp = 30;
+		enemy.maxHP = 30;
+		enemy.attack = 15;
+		enemy.defense = 0;
+	}
+	if (map[player.position[0]][player.position[1]] == 'T') {
+		enemy.name = "Troll";
+		enemy.hp = 80;
+		enemy.maxHP = 80;
+		enemy.attack = 45;
+		enemy.defense = 10;
+	}
+	if (map[player.position[0]][player.position[1]] == 'O') {
+		enemy.name = "Orc";
+		enemy.hp = 50;
+		enemy.maxHP = 50;
+		enemy.attack = 30;
+		enemy.defense = 5;
+	}
+	if (map[player.position[0]][player.position[1]] == 'J') {
+		enemy.name = "RICHARD";
+		enemy.hp = 350;
+		enemy.maxHP = 350;
+		enemy.attack = 60;
+		enemy.firstAttack = 80;
+		enemy.defense = 20;
+		enemy.attackName = "HAZ PUTOS PROYECTOS";
+	}
+
+	return enemy;
+
+}
+
 
 void Intro(Player& player);
 void Status(Player player);
@@ -144,7 +184,18 @@ void Navigation(Player& player) {
 	std::string comm;
 	std::getline(std::cin, comm);
 
-	if (comm == "go north" && north) {
+	if (comm == "go north" && north && map[player.position[0] - 1][player.position[1]] == 'L') {
+		if (player.keys = true) {
+			std::cout << "you have the key\n";
+			player.position[0]--;
+			map[player.position[1]][player.position[0]] = '.';
+		}
+		else
+		{
+			std::cout << "you dont have the key\n";
+		}
+	}
+	else if (comm == "go north" && north) {
 		player.position[0]--;
 	}
 	else if (comm == "go south" && south) {
@@ -160,7 +211,7 @@ void Navigation(Player& player) {
 		PickupItem(player, "potion");
 	}
 	else if (comm == "pick sword" && sword) {
-		PickupItem(player, "potion");
+		PickupItem(player, "sword");
 	}
 	else if (comm == "pick bomb" && bomb) {
 		PickupItem(player, "bomb");
@@ -273,10 +324,20 @@ void PickupItem(Player& player, std::string obj) {
 }
 
 void Help() {
-
+	std::cout << "While not in combat:\n";
+	std::cout << "- go + [NORTH | SOUTH | EAST | WEST]\n";
+	std::cout << "- pickup + [potion | sword | bomb | key]\n";
+	std::cout << "- use + [potion] \n";
+	std::cout << "While in combat:\n";
+	std::cout << "- use + [potion | sword | bomb | key | punch]\n";
+	std::cout << "AT ANY MOMENT\n";
+	std::cout << "- status: shows you current items, health and weapons\n";
+	std::cout << "- help: get's you all the commands\n";
 }
 
 void Combat(Player& player) {
+	std::cout << "you are in combat\n";
+	Enemy enemy= GenerateEnemy(player);
 	do
 	{
 		//Escoger accion
@@ -284,7 +345,6 @@ void Combat(Player& player) {
 		std::string comm;
 		std::getline(std::cin, comm);
 
-		std::cout << "you are in combat";
 		if (comm == "use potion") {
 
 		}
